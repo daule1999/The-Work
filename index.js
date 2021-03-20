@@ -22,7 +22,7 @@ const connect = mongoose.connect(cloudUrl, {
 
 connect.then(
   (db) => {
-    console.log("Connected correctly to server");
+    console.log("Connected correctly to MongoDB server");
   },
   (err) => {
     console.log(err);
