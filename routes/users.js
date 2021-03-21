@@ -34,6 +34,10 @@ router.post("/signup", (req, res, next) => {
     )
     .catch((err) => next(err));
 });
+router.get("/signup",(req, res, next)=>{
+  res.send(`for signing up , you must make a post request`);
+
+})
 router.post("/login", (req, res, next) => {
   console.log("Enter usename and password to login " + "req.session.user");
   if (!req.session.user) {
@@ -93,6 +97,9 @@ router.post("/login", (req, res, next) => {
     res.end("You are already authenticated");
   }
 });
+router.get("/login",(req, res, next)=>{
+  res.send(`for login , you must make a post request`);
+})
 router.get("/logout", (req, res, next) => {
   console.log("Logging out ....");
   if (req.session) {
