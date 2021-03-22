@@ -1,12 +1,12 @@
 var express = require('express')
 const mongoose = require('mongoose');
+const {port,hostname}=require('./proxies')
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const cors = require("cors");
 var session = require("express-session");
 var FileStrore = require("session-file-store")(session);
 var app = express()
-const port=5002;
-const hostname="localhost";
 const mongoUser="bhola";
 const mongoUserPassword="9204387385dD";
 const url = "mongodb://localhost:27017/exerciseTracker";
@@ -27,6 +27,11 @@ connect.then(
   (err) => {
     console.log(err);
   }
+);
+app.use(
+  cors({
+    origin: "http://localhost:3000", // restrict calls to those this address // only allow GET requests
+  })
 );
 app.use(logger("dev"));
 app.use(express.json());
@@ -65,6 +70,6 @@ const auth = (req, res, next) => {
 }
 app.use(auth);
 
-app.listen(3000,()=>{
+app.listen(port,()=>{
     console.log(`Server running at http://${hostname}:${port}`)
 })

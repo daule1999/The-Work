@@ -78,7 +78,7 @@ router.post("/login", (req, res, next) => {
           req.session.user = "authenticated";
           res.statusCode = 200;
           res.setHeader("Content-Type", "text/plain");
-          res.end("You are authenticated..");
+          res.end("Authenticated..");
         } else {
           console.log(`You are not  Authenticated kindly register first`);
           var err = new Error(
