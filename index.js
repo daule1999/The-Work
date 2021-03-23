@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const {port,hostname}=require('./proxies')
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const cors = require("cors");
+// const cors = require("cors");
 var session = require("express-session");
 var FileStrore = require("session-file-store")(session);
 var app = express()
@@ -28,11 +28,26 @@ connect.then(
     console.log(err);
   }
 );
-app.use(
-  cors({
-    origin: "http://localhost:3000", // restrict calls to those this address // only allow GET requests
-  })
-);
+// app.use(
+//   cors({
+//      origin: "http://localhost:3000",//, "http://192.168.0.105:3000" // restrict calls to those this address // only allow GET requests
+//   })
+// );
+var cors = function(req, res, next) {
+  var whitelist = [
+    'http://localhost:3000',
+    'http://192.168.0.105:3000',
+  ];
+  var origin = req.headers.origin;
+  if (whitelist.indexOf(origin) > -1) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  next();
+}
+app.use(cors);
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
