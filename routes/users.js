@@ -11,9 +11,11 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 router.post("/signup", (req, res, next) => {
+  // console.log("body => "+req.body)
   User.findOne({ username: req.body.username })
     .then((user) => {
       if (user != null) {
+        console.log("User " + req.body, username + " already exists")
         var err = new Error("User " + req.body, username + " already exists");
         err.status = 403;
         next(err);
